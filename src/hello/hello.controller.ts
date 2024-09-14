@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Req, Res } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, ParseBoolPipe, ParseIntPipe, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Controller()
@@ -21,5 +21,16 @@ export class HelloController {
     @HttpCode(500)
     errorPage() {
         return 'Error';
+    }
+
+    @Get('ticket/:num')
+    getNumber(@Param('num', ParseIntPipe) num: number) {
+        return num + 15
+    }
+
+    @Get('active/:status')
+    isUserActive(@Param('status', ParseBoolPipe) status: boolean) {
+        console.log(typeof status)
+        return status
     }
 }
